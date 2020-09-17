@@ -23,6 +23,30 @@ public final class YRPayment: NSObject, UITextFieldDelegate {
             numberTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
     }
+    
+    public var numberTextField2: UITextField! {
+        didSet {
+            numberTextField2.delegate = self
+            numberTextField2.keyboardType = .numberPad
+            numberTextField2.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        }
+    }
+    
+    public var numberTextField3: UITextField! {
+        didSet {
+            numberTextField3.delegate = self
+            numberTextField3.keyboardType = .numberPad
+            numberTextField3.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        }
+    }
+    
+    public var numberTextField4: UITextField! {
+        didSet {
+            numberTextField4.delegate = self
+            numberTextField4.keyboardType = .numberPad
+            numberTextField4.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        }
+    }
 
     public var holderNameTextField: UITextField! {
         didSet {
@@ -54,8 +78,9 @@ public final class YRPayment: NSObject, UITextFieldDelegate {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if textField == numberTextField {
-            creditCard.cardNumber = textField.text
+        creditCard.cardNumber = "\(numberTextField.text!)\(numberTextField2.text!)\(numberTextField3.text!)\(numberTextField4.text!)"
+        if textField == numberTextField || textField == numberTextField2 || textField == numberTextField3 || textField == numberTextField4{
+            //creditCard.cardNumber = textField.text
             if !creditCard.isFace { creditCard.flip() }
         } else if textField == holderNameTextField {
             creditCard.cardHolderName = textField.text
@@ -71,7 +96,7 @@ public final class YRPayment: NSObject, UITextFieldDelegate {
 
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         creditCard.unselectAll()
-        if textField == numberTextField {
+        if textField == numberTextField || textField == numberTextField2 || textField == numberTextField3 || textField == numberTextField4{
             creditCard.cardNumberLabel.select()
             if !creditCard.isFace { creditCard.flip() }
         } else if textField == holderNameTextField {
